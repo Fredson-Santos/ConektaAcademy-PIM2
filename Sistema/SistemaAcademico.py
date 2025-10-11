@@ -3,10 +3,12 @@ from funcoes import adicionar_usuario, verificar_login, verificar_usuario
 class SistemaAcademico:
 
     def area_professor(self):
-        print("""\n--- Area Professor ---
-            1. Cadastrar Notas
-            2. Gerar Relatório
-            3. Sair""")
+        while True:
+            print("""\n--- Area Professor ---
+                1. Lançar Notas
+                2. Gerar Relatório
+                3. Sair""")
+
         
 
     def area_aluno(self):
@@ -69,6 +71,7 @@ while True:
             else:
                 print(f"✅ Professor logado com sucesso!")
                 sistema.area_professor()
+
             
         else:
             print("❌ E-mail ou senha incorretos.")
