@@ -45,19 +45,22 @@ def verificar_usuario(email):
 def cadastrar_nota(avaliacao, matricula, nota):
 
     data = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    db.cur.execute("SELECT id_avaliacao FROM avaliacoes WHERE id_matricula_fk = ?", (matricula,))
-    existente = db.cur.fetchone()
     
-    if existente:
-        db.cur.execute(
-    f"UPDATE avaliacoes SET {avaliacao.lower()} = ?, data_lancamento = ? WHERE id_matricula_fk = ?",
-    (nota, data, matricula))
-        print(f"Nota da matricula {matricula} foi alterada para {nota}!")
 
+    db.cur.execute("SELECT avaliacao FROM avaliacoes WHERE id_matricula_fk = ? AND avaliacao = ?", (matricula, avaliacao))
+    existente = db.cur.fetchone()
+    print(existente)
+    if existente is not None and avaliacao == existente[0]:
+        db.cur.execute("""
+        UPDATE avaliacoes 
+        SET nota = ?, data_lancamento = ?
+        WHERE id_matricula_fk = ? AND avaliacao = ?
+    """, (nota, data, matricula, avaliacao))
+        print(f"{avaliacao.upper()}: Nota para da matricula {matricula} foi atualizada para {nota}")
 
     else:
-        db.cur.execute(f"INSERT INTO avaliacoes (id_matricula_fk, {avaliacao.lower()}, data_lancamento) VALUES (?, ?, ?)", (matricula, nota, data))
+        db.cur.execute("""
+            INSERT INTO avaliacoes (id_matricula_fk, nota, avaliacao, data_lancamento) VALUES (?, ?, ?, ?)""", (matricula, nota, avaliacao, data))
         print(f"Nota {nota} lançada para a matricula {matricula}!")
     
     db.con.commit()
@@ -66,10 +69,5 @@ def cadastrar_nota(avaliacao, matricula, nota):
 def fechar_conexao():
     db.con.close()
 
-avaliacao = "NP2"
-matricula = 222
-nota = 8.9
-
-cadastrar_nota(avaliacao,matricula,nota)
 
 

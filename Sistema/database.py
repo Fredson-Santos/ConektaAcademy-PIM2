@@ -50,9 +50,8 @@ def criar_tabelas():
         CREATE TABLE IF NOT EXISTS avaliacoes (
             id_avaliacao INTEGER PRIMARY KEY AUTOINCREMENT,
             id_matricula_fk INTEGER,
-            np1 REAL CHECK (np1 >= 0 AND np1 <= 10),
-            np2 REAL CHECK (np2 >= 0 AND np2 <= 10),
-            exame REAL CHECK (exame >= 0 AND exame <= 10),
+            avaliacao TEXT,
+            nota REAL CHECK (nota >= 0 AND nota <= 10),
             data_lancamento TEXT NOT NULL,
             FOREIGN KEY (id_matricula_fk) REFERENCES matriculas(id_matricula)
                 ON DELETE CASCADE ON UPDATE CASCADE
