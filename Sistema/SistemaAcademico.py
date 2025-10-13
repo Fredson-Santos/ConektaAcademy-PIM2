@@ -1,12 +1,23 @@
-from funcoes import adicionar_usuario, verificar_login, verificar_usuario
+from funcoes import adicionar_usuario, verificar_login, verificar_usuario, cadastrar_nota
 
 class SistemaAcademico:
 
     def area_professor(self):
-        print("""\n--- Area Professor ---
-            1. Cadastrar Notas
-            2. Gerar Relatório
-            3. Sair""")
+        while True:
+            print("""\n--- Area Professor ---
+                1. Lançar Notas
+                2. Gerar Relatório
+                3. Sair""")
+            
+            opcao = int(input("escolha uma opcão: "))
+
+            if opcao == 1:
+                avaliacaoP = input("Digite a avaliçao que deseja lançar nota: ")
+                matricula = input("Digite a matricula do aluno: ")
+                nota = input(f"Digite a nota {avaliacaoP.upper()} da matricula {matricula}: ")
+                cadastrar_nota(avaliacaoP.lower(), matricula, nota)
+
+
         
 
     def area_aluno(self):
@@ -69,6 +80,7 @@ while True:
             else:
                 print(f"✅ Professor logado com sucesso!")
                 sistema.area_professor()
+
             
         else:
             print("❌ E-mail ou senha incorretos.")

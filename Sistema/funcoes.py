@@ -1,9 +1,8 @@
 import sqlite3
 import database as db
+from datetime import datetime
 
 #if __name__ == "__main__":
-
-##### Puxar o arquivo do banco de dados para a raiz da pasta #######
 
 #Esse arquivo armazena as funcoes que serao usadas no arquivo main
 
@@ -13,13 +12,12 @@ def adicionar_usuario(nome, email, matricula, senha, tipo_usuario):
             INSERT INTO usuarios (nome, email, matricula, senha, tipo_usuario)
             VALUES (?, ?, ?, ?, ?)
         """, (nome, email, matricula, senha, tipo_usuario))
-        db.con.commit()
         print(f"Usuário {nome} adicionado com sucesso!")
+        db.con.commit()
     except sqlite3.IntegrityError as e:
         print(f"Erro de integridade: {e}")
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
-    db.con.commit()
 
 
 def verificar_login(email, senha):
@@ -44,8 +42,32 @@ def verificar_usuario(email):
 
 
 
+def cadastrar_nota(avaliacao, matricula, nota):
+
+    data = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+
+    db.cur.execute("SELECT avaliacao FROM avaliacoes WHERE id_matricula_fk = ? AND avaliacao = ?", (matricula, avaliacao))
+    existente = db.cur.fetchone()
+    print(existente)
+    if existente is not None and avaliacao == existente[0]:
+        db.cur.execute("""
+        UPDATE avaliacoes 
+        SET nota = ?, data_lancamento = ?
+        WHERE id_matricula_fk = ? AND avaliacao = ?
+    """, (nota, data, matricula, avaliacao))
+        print(f"{avaliacao.upper()}: Nota para da matricula {matricula} foi atualizada para {nota}")
+
+    else:
+        db.cur.execute("""
+            INSERT INTO avaliacoes (id_matricula_fk, nota, avaliacao, data_lancamento) VALUES (?, ?, ?, ?)""", (matricula, nota, avaliacao, data))
+        print(f"Nota {nota} lançada para a matricula {matricula}!")
+    
+    db.con.commit()
+
 
 def fechar_conexao():
     db.con.close()
+
 
 
