@@ -61,7 +61,7 @@ def criar_tabelas():
 
 
 # === CADASTRO E LOGIN ===
-def adicionar_usuario(nome, email, matricula, senha, tipo_usuario, materia=None):
+def adicionar_usuario(nome, email, matricula, senha, tipo_usuario, materia):
     conn = conectar()
     cursor = conn.cursor()
     cursor.execute("""
@@ -112,6 +112,14 @@ def consultar_notas(materia, matricula):
     notas = cursor.fetchone()
     conn.close()
     return notas
+
+def consultar_aluno(matricula):
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT nome from usuarios WHERE matricula = ?",(matricula,))
+    nome = cursor.fetchone()
+    conn.close()
+    return nome
 
 def atualizar_presenca(matricula, data, presente):
     conn = conectar()

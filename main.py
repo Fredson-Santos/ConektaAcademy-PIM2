@@ -2,7 +2,7 @@ from funcoes import (
     criar_tabelas, adicionar_usuario, verificar_login,
     cadastrar_nota, consultar_notas, atualizar_presenca,
     consultar_presenca, adicionar_aula_cronograma,
-    consultar_cronograma, iniciar_chat
+    consultar_cronograma, iniciar_chat,consultar_aluno
 )
 
 # === SISTEMA PRINCIPAL ===
@@ -62,10 +62,14 @@ class SistemaAcademico:
     def gerar_relatorio(self, materia):
         matricula = input("Matrícula do aluno: ").strip()
         notas = consultar_notas(materia, matricula)
+        aluno = consultar_aluno(matricula)
         presencas = consultar_presenca(matricula)
         print(f"\n📄 Relatório — {matricula}")
         if notas:
+            print(f"Aluno: {aluno[0]}")
             print(f"Notas: NP1={notas[0]} | NP2={notas[1]} | PIM={notas[2]}")
+            media_semestral = (4*notas[0]+4*notas[1]+2*notas[2])/10
+            print(f"Média Semestral: {media_semestral:.2f}")
         else:
             print("Nenhuma nota registrada.")
         print("Presenças:")
@@ -213,8 +217,9 @@ while True:
         senha = input("Senha: ")
         usuario = verificar_login(login, senha)
 
+
         if usuario:
-            if usuario[5] == "professor":
+            if usuario[5] == "professor": #Código para professor
                 sistema.area_professor(usuario)
             else:
                 sistema.area_aluno(usuario)
