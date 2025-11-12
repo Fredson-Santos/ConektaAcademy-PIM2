@@ -49,6 +49,7 @@ Com foco em modernização e eficiência, o projeto integra funcionalidades de g
 - ✅ Sessão persistente ("Lembrar-me")
 - ✅ Vinculação automática de aluno ao curso ao vincular à turma
 - ✅ Relatórios completos com download de boletim em PDF
+- ✅ Função C para cálculo de média (opcional, com fallback para Python)
 
 ### Funcionalidades
 
@@ -98,6 +99,7 @@ Com foco em modernização e eficiência, o projeto integra funcionalidades de g
 - 🔐 **Hashlib (SHA-256)** - Criptografia de senhas
 - 📄 **ReportLab** - Geração de relatórios em PDF
 - 💬 **Requests** - Integração com API de chat
+- ⚙️ **C (ctypes)** - Função C para cálculo de média (opcional)
 
 **Arquitetura:**
 - 📁 **Modular** - Separação entre interface web e terminal
@@ -252,7 +254,9 @@ Sistema-Acad-mico-PIM-II-IA/
 │   ├── funcoes.py                  # Funções de negócio
 │   ├── classes.py                  # Classes do sistema
 │   ├── chat.py                     # Integração ChatBot
-│   └── relatorios.py               # Geração de relatórios
+│   ├── relatorios.py               # Geração de relatórios
+│   ├── calcular_media.c            # Função C para cálculo de média
+│   └── calcular_media_wrapper.py   # Wrapper Python para função C
 │
 ├── 📊 diagramas/                    # Diagramas UML (PlantUML)
 │   ├── README.md                   # Documentação dos diagramas
@@ -280,7 +284,10 @@ Sistema-Acad-mico-PIM-II-IA/
 ├── 📋 requirements.txt              # Dependências do projeto
 ├── 🪟 run.bat                       # Script de execução (Windows)
 ├── 🐧 run.sh                        # Script de execução (Linux/Mac)
+├── 🔧 compilar_c.bat                # Script para compilar função C (Windows)
+├── 🔧 compilar_c.sh                 # Script para compilar função C (Linux/Mac)
 ├── 📄 README.md                     # Este arquivo
+├── 📄 COMPILAR_C.md                 # Instruções para compilar função C
 │
 └── 💾 sistema_academico.db          # Banco de dados SQLite (criado automaticamente)
 ```
@@ -369,6 +376,16 @@ Certifique-se de usar o script `run.sh` (com permissão de execução) ou execut
 chmod +x run.sh
 ./run.sh
 ```
+
+### Sobre a Função C (Opcional)
+
+O sistema inclui uma função C simples para cálculo de média de notas. Esta função é **opcional** - o sistema funciona perfeitamente sem ela, usando cálculo Python.
+
+**Para compilar a função C:**
+- **Windows:** Execute `compilar_c.bat` ou consulte `COMPILAR_C.md`
+- **Linux/Mac:** Execute `chmod +x compilar_c.sh && ./compilar_c.sh` ou consulte `COMPILAR_C.md`
+
+**Nota:** Se a função C não estiver compilada, o sistema automaticamente usará o cálculo Python padrão. Não é necessário compilar para o sistema funcionar.
 
 ---
 

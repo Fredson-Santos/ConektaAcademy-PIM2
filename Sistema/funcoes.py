@@ -625,9 +625,15 @@ def listar_notas_disciplina(disciplina_id):
         pim = notas[2] if notas and notas[2] is not None else None
         
         # Calcular média (se todas as notas existirem)
+        # Tenta usar função C, se não disponível usa cálculo Python
         media = None
         if np1 is not None and np2 is not None and pim is not None:
-            media = (np1 + np2 + pim) / 3
+            try:
+                from sistema.calcular_media_wrapper import calcular_media
+                media = calcular_media(np1, np2, pim)
+            except ImportError:
+                # Fallback para cálculo Python se wrapper não estiver disponível
+                media = (np1 + np2 + pim) / 3
         
         resultados.append({
             'nome': nome_aluno,

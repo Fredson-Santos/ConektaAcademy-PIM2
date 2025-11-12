@@ -91,8 +91,16 @@ def gerar_relatorio_pdf(matricula):
                 pim = nota_disc['pim'] if nota_disc['pim'] else 0
                 
                 # Calcular média
+                # Tenta usar função C, se não disponível usa cálculo Python
                 notas_validas = [n for n in [np1, np2, pim] if n and n > 0]
-                media = sum(notas_validas) / len(notas_validas) if notas_validas else 0
+                if len(notas_validas) == 3:
+                    try:
+                        from sistema.calcular_media_wrapper import calcular_media
+                        media = calcular_media(np1 or 0, np2 or 0, pim or 0)
+                    except ImportError:
+                        media = sum(notas_validas) / len(notas_validas) if notas_validas else 0
+                else:
+                    media = sum(notas_validas) / len(notas_validas) if notas_validas else 0
                 
                 table_data.append([
                     nota_disc['disciplina'],
