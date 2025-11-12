@@ -1,0 +1,88 @@
+@startuml Diagrama de Sequência - Aluno Consulta Notas
+
+actor Aluno
+participant "Interface Web" as Interface
+participant "area_aluno" as AreaAluno
+participant "Funcoes" as Funcoes
+participant "Database" as DB
+database "SQLite" as SQLite
+
+== Aluno Consulta Notas ==
+
+Aluno -> Interface: Faz login
+activate Interface
+
+Interface -> Funcoes: verificar_login(email_ou_matricula, senha)
+activate Funcoes
+
+Funcoes -> DB: conectar()
+activate DB
+DB -> SQLite: SELECT * FROM usuarios WHERE email = ? OR matricula = ?
+activate SQLite
+SQLite --> DB: dados_usuario
+deactivate SQLite
+DB --> Funcoes: user
+deactivate DB
+
+Funcoes -> Funcoes: verificar_senha(senha, hash_armazenado)
+Funcoes --> Interface: usuario (se senha correta)
+deactivate Funcoes
+
+Interface -> AreaAluno: area_aluno(aluno)
+activate AreaAluno
+
+Aluno -> Interface: Acessa aba "Notas"
+activate Interface
+
+Interface -> AreaAluno: Exibe notas do aluno
+activate AreaAluno
+
+AreaAluno -> Funcoes: buscar_disciplinas_por_aluno(matricula)
+activate Funcoes
+
+Funcoes -> DB: conectar()
+activate DB
+
+DB -> SQLite: SELECT disciplinas.*, cursos.nome FROM disciplinas LEFT JOIN cursos ON disciplinas.curso_id = cursos.id WHERE disciplinas.turma_id = (SELECT turma_id FROM usuarios WHERE matricula = ?)
+activate SQLite
+SQLite --> DB: Lista de disciplinas
+deactivate SQLite
+DB --> Funcoes: disciplinas_aluno
+deactivate DB
+
+Funcoes --> AreaAluno: disciplinas_aluno
+deactivate Funcoes
+
+loop Para cada disciplina
+    AreaAluno -> Funcoes: consultar_notas_por_disciplina(disciplina_id, matricula)
+    activate Funcoes
+    
+    Funcoes -> DB: conectar()
+    activate DB
+    DB -> SQLite: SELECT np1, np2, pim FROM notas WHERE disciplina_id = ? AND matricula = ?
+    activate SQLite
+    SQLite --> DB: (np1, np2, pim)
+    deactivate SQLite
+    DB --> Funcoes: notas
+    deactivate DB
+    
+    Funcoes --> AreaAluno: notas (np1, np2, pim)
+    deactivate Funcoes
+    
+    AreaAluno -> AreaAluno: Calcular média: (np1 + np2 + pim) / 3
+    
+    alt Média >= 7.0
+        AreaAluno -> AreaAluno: Aplicar estilo verde
+    else Média < 7.0
+        AreaAluno -> AreaAluno: Aplicar estilo vermelho
+    end
+end
+
+AreaAluno --> Interface: Dados formatados com cores
+deactivate AreaAluno
+
+Interface --> Aluno: Exibe tabela de notas com cores indicativas
+deactivate Interface
+
+@enduml
+

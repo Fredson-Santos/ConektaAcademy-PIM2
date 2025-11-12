@@ -1,0 +1,86 @@
+@startuml Diagrama de Sequência - Professor Lança Nota
+
+actor Professor
+participant "Interface Web" as Interface
+participant "area_professor" as AreaProf
+participant "Funcoes" as Funcoes
+participant "Database" as DB
+database "SQLite" as SQLite
+
+== Professor Lança Nota ==
+
+Professor -> Interface: Acessa "Minhas Disciplinas"
+activate Interface
+
+Interface -> AreaProf: area_professor(professor)
+activate AreaProf
+
+AreaProf -> Funcoes: buscar_disciplinas_por_professor(professor_id)
+activate Funcoes
+Funcoes -> DB: conectar()
+activate DB
+DB -> SQLite: SELECT disciplinas WHERE professor_id
+activate SQLite
+SQLite --> DB: Lista de disciplinas
+deactivate SQLite
+DB --> Funcoes: Lista de disciplinas
+deactivate DB
+Funcoes --> AreaProf: disciplinas_prof
+deactivate Funcoes
+
+AreaProf --> Interface: Exibe disciplinas no selectbox
+deactivate AreaProf
+
+Professor -> Interface: Seleciona disciplina
+Professor -> Interface: Seleciona aluno
+Professor -> Interface: Preenche NP1, NP2, PIM
+Professor -> Interface: Clica "Lançar Notas"
+
+Interface -> AreaProf: cadastrar_nota_por_disciplina(disciplina_id, matricula, np1, np2, pim)
+activate AreaProf
+
+AreaProf -> Funcoes: cadastrar_nota_por_disciplina(disciplina_id, matricula, np1, np2, pim)
+activate Funcoes
+
+Funcoes -> DB: conectar()
+activate DB
+
+alt Nota já existe
+    Funcoes -> DB: SELECT id FROM notas WHERE disciplina_id AND matricula
+    DB -> SQLite: Query
+    activate SQLite
+    SQLite --> DB: Registro encontrado
+    deactivate SQLite
+    DB --> Funcoes: existe = True
+    
+    Funcoes -> DB: UPDATE notas SET np1, np2, pim WHERE disciplina_id AND matricula
+    DB -> SQLite: UPDATE
+    activate SQLite
+    SQLite --> DB: OK
+    deactivate SQLite
+else Nota não existe
+    Funcoes -> DB: INSERT INTO notas (disciplina_id, matricula, np1, np2, pim)
+    DB -> SQLite: INSERT
+    activate SQLite
+    SQLite --> DB: OK
+    deactivate SQLite
+end
+
+DB -> SQLite: COMMIT
+activate SQLite
+SQLite --> DB: OK
+deactivate SQLite
+
+DB --> Funcoes: Sucesso
+deactivate DB
+Funcoes --> AreaProf: True
+deactivate Funcoes
+
+AreaProf --> Interface: Nota cadastrada com sucesso
+deactivate AreaProf
+
+Interface --> Professor: Exibe mensagem de sucesso
+deactivate Interface
+
+@enduml
+

@@ -4,11 +4,11 @@ API_URL = "https://n8n.conekta.tech/webhook/chatbot-sa"
 
 
 
-def enviar_mensagens(mensagem, matricula):
+def enviar_mensagens(mensagem, email):
     try:
         payload = {
             "mensagem": mensagem,
-            "matricula": matricula
+            "email": email
         }
         resposta = requests.post(API_URL, json=payload, timeout=20)
         resposta.raise_for_status()
@@ -19,7 +19,7 @@ def enviar_mensagens(mensagem, matricula):
         return f"Erro de conexão: {e}"
     
 def iniciar_chat():
-    matricula = input("\nDigite sua matricula ou email para iniciar o atendimento: ")
+    email = input("\nDigite seu email para iniciar o atendimento: ")
     print("\n🟢 Chat conectado! Digite 'sair' para encerrar.\n")
 
     while True: 
@@ -29,7 +29,7 @@ def iniciar_chat():
             print("❌ Chat encerrado. 👋")
             break
 
-        resposta = enviar_mensagens(mensagem,matricula)
+        resposta = enviar_mensagens(mensagem,email)
         print(f"\nBot: {resposta}\n")
 
 if __name__ == "__main__":

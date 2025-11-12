@@ -1,0 +1,89 @@
+@startuml Diagrama de Rede LAN - ConektaAcademy
+
+!define RECTANGLE class
+
+package "Rede Local (LAN)" {
+  
+  rectangle "Servidor Principal" as Servidor {
+    component "Streamlit App\n(interface/app.py)" as StreamlitApp
+    component "Python Backend\n(sistema/)" as Backend
+    component "SQLite Database\n(sistema_academico.db)" as Database
+  }
+  
+  rectangle "Switch/Router" as Switch #LightBlue
+  
+  rectangle "Estação de Trabalho 1" as Estacao1 {
+    component "Navegador Web\n(Chrome/Firefox)" as Browser1
+    actor "Secretaria" as Secretaria
+  }
+  
+  rectangle "Estação de Trabalho 2" as Estacao2 {
+    component "Navegador Web\n(Chrome/Firefox)" as Browser2
+    actor "Professor" as Professor
+  }
+  
+  rectangle "Estação de Trabalho 3" as Estacao3 {
+    component "Navegador Web\n(Chrome/Firefox)" as Browser3
+    actor "Aluno" as Aluno
+  }
+  
+  rectangle "Terminal CLI" as Terminal {
+    component "Python CLI\n(terminal/main.py)" as CLI
+    actor "Administrador" as Admin
+  }
+  
+  rectangle "Servidor de Chat" as ChatServer {
+    component "API Externa\n(ChatBot)" as ChatAPI
+    cloud "Internet" as Internet
+  }
+}
+
+' Conexões físicas
+Servidor --> Switch : Ethernet\n192.168.1.10
+Estacao1 --> Switch : Ethernet\n192.168.1.20
+Estacao2 --> Switch : Ethernet\n192.168.1.21
+Estacao3 --> Switch : Ethernet\n192.168.1.22
+Terminal --> Switch : Ethernet\n192.168.1.30
+ChatServer --> Switch : Ethernet\n192.168.1.40
+
+' Conexões lógicas
+StreamlitApp --> Backend : chama funções
+Backend --> Database : SQL queries
+Browser1 --> StreamlitApp : HTTP\nhttp://192.168.1.10:8501
+Browser2 --> StreamlitApp : HTTP\nhttp://192.168.1.10:8501
+Browser3 --> StreamlitApp : HTTP\nhttp://192.168.1.10:8501
+CLI --> Backend : importa módulos
+CLI --> Database : SQL queries
+Backend --> ChatAPI : HTTP requests
+ChatAPI --> Internet : API calls
+
+' Relações de uso
+Secretaria --> Browser1 : usa
+Professor --> Browser2 : usa
+Aluno --> Browser3 : usa
+Admin --> CLI : usa
+
+note right of Servidor
+  **Especificações:**
+  - Python 3.8+
+  - Streamlit 1.28+
+  - SQLite 3.x
+  - Porta: 8501
+end note
+
+note right of Switch
+  **Configuração:**
+  - IP Range: 192.168.1.0/24
+  - Gateway: 192.168.1.1
+  - DNS: 8.8.8.8
+end note
+
+note right of ChatServer
+  **Integração Externa:**
+  - API REST
+  - Requer conexão Internet
+  - Opcional (sistema funciona sem)
+end note
+
+@enduml
+

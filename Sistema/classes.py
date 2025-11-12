@@ -1,7 +1,13 @@
-from database import criar_tabelas
-from menus.secretaria_menu import area_secretaria
-from menus.professor_menu import area_professor
-from menus.aluno_menu import area_aluno
+import sys
+import os
+
+# Adicionar o diretório raiz ao path para imports absolutos
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
+from sistema.database import criar_tabelas
+from terminal.menus.secretaria_menu import area_secretaria
+from terminal.menus.professor_menu import area_professor
+from terminal.menus.aluno_menu import area_aluno
 
 
 # === SISTEMA PRINCIPAL ===
