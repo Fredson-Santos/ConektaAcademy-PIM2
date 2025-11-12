@@ -1,0 +1,89 @@
+@startuml Diagrama de Casos de Uso - ConektaAcademy
+
+left to right direction
+
+actor "Aluno" as Aluno
+actor "Professor" as Professor
+actor "Secretaria" as Secretaria
+actor "ChatBot" as ChatBot
+
+rectangle "Sistema ConektaAcademy" {
+  
+  package "Autenticação" {
+    (Fazer Login)
+    (Cadastrar Usuário)
+  }
+  
+  package "Área do Aluno" {
+    (Consultar Notas)
+    (Consultar Presenças)
+    (Ver Cronograma)
+    (Fazer Anotações)
+    (Gerar Relatório Pessoal)
+    (Baixar Boletim PDF)
+  }
+  
+  package "Área do Professor" {
+    (Lançar Notas)
+    (Registrar Presença)
+    (Gerenciar Cronograma)
+    (Gerar Relatórios)
+    (Fazer Anotações)
+  }
+  
+  package "Área da Secretaria" {
+    (Gerenciar Usuários)
+    (Gerenciar Turmas)
+    (Gerenciar Disciplinas)
+    (Gerenciar Cursos)
+    (Vincular Recursos)
+    (Resetar Senhas)
+    (Gerar Relatórios Gerais)
+    (Exportar Dados)
+  }
+  
+  package "Sistema" {
+    (Suporte via ChatBot)
+  }
+}
+
+' Relações Aluno
+Aluno --> (Fazer Login)
+Aluno --> (Consultar Notas)
+Aluno --> (Consultar Presenças)
+Aluno --> (Ver Cronograma)
+Aluno --> (Fazer Anotações)
+Aluno --> (Gerar Relatório Pessoal)
+Aluno --> (Baixar Boletim PDF)
+Aluno --> (Suporte via ChatBot)
+
+' Relações Professor
+Professor --> (Fazer Login)
+Professor --> (Lançar Notas)
+Professor --> (Registrar Presença)
+Professor --> (Gerenciar Cronograma)
+Professor --> (Gerar Relatórios)
+Professor --> (Fazer Anotações)
+Professor --> (Suporte via ChatBot)
+
+' Relações Secretaria
+Secretaria --> (Fazer Login)
+Secretaria --> (Gerenciar Usuários)
+Secretaria --> (Gerenciar Turmas)
+Secretaria --> (Gerenciar Disciplinas)
+Secretaria --> (Gerenciar Cursos)
+Secretaria --> (Vincular Recursos)
+Secretaria --> (Resetar Senhas)
+Secretaria --> (Gerar Relatórios Gerais)
+Secretaria --> (Exportar Dados)
+Secretaria --> (Suporte via ChatBot)
+
+' Relações ChatBot
+ChatBot --> (Suporte via ChatBot)
+
+' Dependências
+(Fazer Login) ..> (Consultar Notas) : <<include>>
+(Fazer Login) ..> (Lançar Notas) : <<include>>
+(Fazer Login) ..> (Gerenciar Usuários) : <<include>>
+
+@enduml

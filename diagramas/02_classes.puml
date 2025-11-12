@@ -1,0 +1,199 @@
+@startuml Diagrama de Classes - ConektaAcademy
+
+package "Sistema Principal" {
+  class SistemaAcademico {
+    - __init__()
+    + area_secretaria(secretaria)
+    + area_professor(professor)
+    + area_aluno(aluno)
+  }
+}
+
+package "Banco de Dados" {
+  class Database {
+    + conectar()
+    + criar_tabelas()
+  }
+  
+  class Listar {
+    - conn
+    - cursor
+    + listar(tabela, colunas)
+  }
+}
+
+package "Entidades" {
+  class Usuario {
+    - id: int
+    - nome: str
+    - email: str
+    - matricula: str
+    - senha: str (hash)
+    - tipo_usuario: str
+    - curso: str
+    - turma_id: str
+    - materia: str
+  }
+  
+  class Turma {
+    - id: int
+    - nome: str
+    - ano: int
+    - professor_id: int
+    - curso_id: int
+  }
+  
+  class Disciplina {
+    - id: int
+    - nome: str
+    - professor_id: int
+    - carga_horaria: int
+    - curso_id: int
+    - turma_id: str
+  }
+  
+  class Curso {
+    - id: int
+    - nome: str
+    - inicio: str
+    - duracao: int
+  }
+  
+  class Nota {
+    - id: int
+    - disciplina_id: int
+    - matricula: str
+    - np1: float
+    - np2: float
+    - pim: float
+    - data_lancamento: str
+  }
+  
+  class Presenca {
+    - id: int
+    - matricula: str
+    - data: str
+    - presente: bool
+  }
+  
+  class Cronograma {
+    - id: int
+    - sala: str
+    - data: str
+    - dia_semana: str
+    - conteudo: str
+  }
+}
+
+package "Funções de Negócio" {
+  class FuncoesUsuario {
+    + adicionar_usuario()
+    + verificar_login()
+    + hash_senha()
+    + verificar_senha()
+    + excluir_usuario()
+    + redefinir_senha()
+  }
+  
+  class FuncoesTurma {
+    + criar_turma()
+    + excluir_turma()
+    + vincular_professor_turma()
+    + vincular_aluno_turma()
+  }
+  
+  class FuncoesDisciplina {
+    + criar_disciplina()
+    + excluir_disciplina()
+    + vincular_disciplina_professor()
+    + vincular_disciplina_curso()
+    + vincular_disciplina_turma()
+  }
+  
+  class FuncoesNota {
+    + cadastrar_nota_por_disciplina()
+    + consultar_notas_por_disciplina()
+    + listar_notas_disciplina()
+  }
+  
+  class FuncoesPresenca {
+    + atualizar_presenca()
+    + consultar_presenca()
+    + listar_presencas_disciplina()
+  }
+  
+  class FuncoesCurso {
+    + criar_curso()
+    + excluir_curso()
+    + listar_cursos()
+  }
+  
+  class FuncoesRelatorio {
+    + gerar_relatorio_pdf()
+    + buscar_dados_completos_aluno()
+    + gerar_dados_relatorio_turmas()
+    + gerar_dados_relatorio_disciplinas()
+    + gerar_dados_relatorio_cursos()
+  }
+}
+
+package "Interface" {
+  class InterfaceWeb {
+    + tela_login()
+    + area_aluno()
+    + area_professor()
+    + area_secretaria()
+  }
+  
+  class ChatBot {
+    + enviar_mensagens()
+    + iniciar_chat()
+  }
+}
+
+' Relacionamentos
+SistemaAcademico --> Database : usa
+SistemaAcademico --> InterfaceWeb : usa
+SistemaAcademico --> FuncoesUsuario : usa
+
+Database --> Usuario : armazena
+Database --> Turma : armazena
+Database --> Disciplina : armazena
+Database --> Curso : armazena
+Database --> Nota : armazena
+Database --> Presenca : armazena
+Database --> Cronograma : armazena
+
+Turma "1" --> "*" Usuario : contém (alunos)
+Turma "1" --> "1" Curso : pertence
+Turma "1" --> "1" Usuario : tem (professor)
+
+Disciplina "1" --> "1" Usuario : tem (professor)
+Disciplina "1" --> "1" Curso : pertence
+Disciplina "1" --> "1" Turma : vinculada
+
+Nota "1" --> "1" Disciplina : pertence
+Nota "1" --> "1" Usuario : pertence (aluno)
+
+Presenca "1" --> "1" Usuario : pertence (aluno)
+
+FuncoesUsuario --> Usuario : manipula
+FuncoesTurma --> Turma : manipula
+FuncoesDisciplina --> Disciplina : manipula
+FuncoesNota --> Nota : manipula
+FuncoesPresenca --> Presenca : manipula
+FuncoesCurso --> Curso : manipula
+FuncoesRelatorio --> Usuario : gera relatórios
+FuncoesRelatorio --> Turma : gera relatórios
+FuncoesRelatorio --> Disciplina : gera relatórios
+FuncoesRelatorio --> Curso : gera relatórios
+
+InterfaceWeb --> FuncoesUsuario : chama
+InterfaceWeb --> FuncoesTurma : chama
+InterfaceWeb --> FuncoesDisciplina : chama
+InterfaceWeb --> FuncoesNota : chama
+InterfaceWeb --> FuncoesPresenca : chama
+InterfaceWeb --> ChatBot : usa
+
+@enduml
+
