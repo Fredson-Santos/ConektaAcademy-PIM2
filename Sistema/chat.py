@@ -1,14 +1,17 @@
 import requests
+import datetime
 
 API_URL = "https://n8n.conekta.tech/webhook/chatbot-sa"
 
+session_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 
 
 def enviar_mensagens(mensagem, email):
     try:
         payload = {
             "mensagem": mensagem,
-            "email": email
+            "email": email,
+            "session_id": session_id
         }
         resposta = requests.post(API_URL, json=payload, timeout=20)
         resposta.raise_for_status()
