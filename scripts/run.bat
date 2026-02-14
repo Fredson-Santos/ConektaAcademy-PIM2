@@ -1,5 +1,6 @@
 @echo off
 REM Script para executar o Sistema Acadêmico com Streamlit
+cd /d "%~dp0\.."
 
 echo.
 echo ================================

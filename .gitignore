@@ -1,0 +1,61 @@
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ==========================
+# Ambientes Virtuais
+# ==========================
+venv/
+.venv/
+env/
+
+# ==========================
+# Variáveis de Ambiente
+# ==========================
+.env
+.env.local
+
+# ==========================
+# IDEs e Editores
+# ==========================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# ==========================
+# Banco de Dados (gerado)
+# ==========================
+*.db
+*.sqlite3
+
+# ==========================
+# Compilados C (gerados)
+# ==========================
+*.dll
+*.so
+*.dylib
+*.o
+*.obj
+
+# ==========================
+# Arquivos Gerados
+# ==========================
+README.pdf
+
+# ==========================
+# Sistema Operacional
+# ==========================
+Thumbs.db
+.DS_Store
+Desktop.ini

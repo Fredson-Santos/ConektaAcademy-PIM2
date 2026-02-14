@@ -1,5 +1,6 @@
 @echo off
 REM Script para compilar a função C no Windows
+cd /d "%~dp0\.."
 
 echo.
 echo ================================

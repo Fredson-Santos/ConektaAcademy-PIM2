@@ -4,7 +4,7 @@
 
 Sistema completo de gestão acadêmica com interface web moderna (Streamlit) e modo terminal (CLI), desenvolvido para gerenciamento de alunos, professores, disciplinas, turmas e cursos.
 
-[Ver Diagramas UML](diagramas/) · [Documentação Completa](Documentação/MDs/) · [Reportar Erro](https://github.com) · [Solicitar Features](https://github.com)
+[Ver Diagramas UML](docs/diagramas/) · [Documentação Completa](docs/) · [Reportar Erro](https://github.com) · [Solicitar Features](https://github.com)
 
 ---
 
@@ -160,7 +160,7 @@ Com foco em modernização e eficiência, o projeto integra funcionalidades de g
 
 **Windows:**
 ```bash
-run.bat
+scripts\run.bat
 ```
 ou
 ```bash
@@ -169,7 +169,7 @@ streamlit run interface/app.py
 
 **Linux/Mac:**
 ```bash
-./run.sh
+./scripts/run.sh
 ```
 ou
 ```bash
@@ -190,7 +190,7 @@ python terminal/main.py
 
 ### Primeiro Acesso
 
-1. **Execute o sistema** usando `run.bat` (Windows) ou `run.sh` (Linux/Mac)
+1. **Execute o sistema** usando `scripts/run.bat` (Windows) ou `scripts/run.sh` (Linux/Mac)
 2. **Crie sua conta** através da aba "Cadastro" na tela de login
 3. **Faça login** com suas credenciais
 
@@ -227,69 +227,69 @@ python terminal/main.py
 ## 📁 Estrutura do Projeto
 
 ```
-Sistema-Acad-mico-PIM-II-IA/
+ConektaAcademy/
 │
 ├── 📱 interface/                    # Interface Web (Streamlit)
 │   ├── __init__.py
-│   ├── app.py                      # Aplicação principal Streamlit
+│   ├── app.py                       # Aplicação principal Streamlit
 │   └── telas/
 │       ├── __init__.py
-│       ├── login.py                # Tela de login e cadastro
+│       ├── login.py                 # Tela de login e cadastro
 │       ├── area_aluno.py            # Área do aluno
-│       ├── area_professor.py       # Área do professor
-│       └── area_secretaria.py      # Área da secretaria
+│       ├── area_professor.py        # Área do professor
+│       └── area_secretaria.py       # Área da secretaria
 │
 ├── 💻 terminal/                     # Modo Terminal (CLI)
 │   ├── __init__.py
-│   ├── main.py                     # Executar: python terminal/main.py
+│   ├── main.py                      # Executar: python terminal/main.py
 │   └── menus/
 │       ├── __init__.py
-│       ├── aluno_menu.py           # Menu do aluno
-│       ├── professor_menu.py       # Menu do professor
-│       └── secretaria_menu.py      # Menu da secretaria
+│       ├── aluno_menu.py            # Menu do aluno
+│       ├── professor_menu.py        # Menu do professor
+│       └── secretaria_menu.py       # Menu da secretaria
 │
-├── 🔧 sistema/                      # Módulos Compartilhados
+├── 🔧 Sistema/                      # Módulos de Backend
 │   ├── __init__.py
-│   ├── database.py                 # Gerenciamento do banco de dados
-│   ├── funcoes.py                  # Funções de negócio
-│   ├── classes.py                  # Classes do sistema
-│   ├── chat.py                     # Integração ChatBot
-│   ├── relatorios.py               # Geração de relatórios
-│   ├── calcular_media.c            # Função C para cálculo de média
-│   └── calcular_media_wrapper.py   # Wrapper Python para função C
+│   ├── database.py                  # Gerenciamento do banco de dados
+│   ├── funcoes.py                   # Funções de negócio
+│   ├── classes.py                   # Classes do sistema
+│   ├── chat.py                      # Integração ChatBot
+│   ├── relatorios.py                # Geração de relatórios
+│   ├── calcular_media.c             # Função C para cálculo de média
+│   └── calcular_media_wrapper.py    # Wrapper Python para função C
 │
-├── 📊 diagramas/                    # Diagramas UML (PlantUML)
-│   ├── README.md                   # Documentação dos diagramas
-│   ├── 01_caso_uso.puml            # Diagrama de casos de uso
-│   ├── 02_classes.puml             # Diagrama de classes
-│   ├── 03_sequencia_professor_lanca_nota.puml
-│   ├── 04_sequencia_secretaria_cria_turma.puml
-│   ├── 05_sequencia_aluno_consulta_notas.puml
-│   └── 06_rede_lan.puml            # Diagrama de rede LAN
+├── �️ scripts/                      # Scripts de execução
+│   ├── run.bat                      # Executar sistema (Windows)
+│   ├── run.sh                       # Executar sistema (Linux/Mac)
+│   ├── compilar_c.bat               # Compilar função C (Windows)
+│   └── compilar_c.sh                # Compilar função C (Linux/Mac)
 │
-├── 📖 Documentação/                 # Documentação do projeto
-│   ├── MDs/                        # Arquivos Markdown de documentação
-│   │   ├── MANUAL_USUARIO.md
-│   │   ├── README_INTERFACE.md
-│   │   ├── GUIA_RAPIDO.md
-│   │   ├── INSTALACAO.md
-│   │   ├── EXEMPLOS_USO.md
-│   │   └── ... (outros documentos)
-│   └── ... (outros arquivos de documentação)
+├── 🧪 tests/                        # Testes
+│   └── testar_c.py                  # Testes da função C
 │
-├── 🤖 chatbot/                      # Integração com chatbot
-│   ├── system prompt.txt
-│   └── teste.py
+├── 📖 docs/                         # Documentação completa
+│   ├── diagramas/                   # Diagramas UML (PlantUML)
+│   │   ├── README.md
+│   │   ├── 01_caso_uso.puml
+│   │   ├── 02_classes.puml
+│   │   ├── 03_sequencia_professor_lanca_nota.puml
+│   │   ├── 04_sequencia_secretaria_cria_turma.puml
+│   │   ├── 05_sequencia_aluno_consulta_notas.puml
+│   │   └── 06_rede_lan.puml
+│   ├── word/                        # Documentos Word originais
+│   ├── prints/                      # Screenshots da interface
+│   ├── chatbot/                     # Docs do agente de suporte
+│   ├── MANUAL_USUARIO.md
+│   ├── GUIA_RAPIDO.md
+│   ├── INSTALACAO.md
+│   ├── EXEMPLOS_USO.md
+│   └── ... (outros documentos)
 │
+├── .streamlit/                      # Configuração do Streamlit
+│   └── config.toml
+├── .gitignore
 ├── 📋 requirements.txt              # Dependências do projeto
-├── 🪟 run.bat                       # Script de execução (Windows)
-├── 🐧 run.sh                        # Script de execução (Linux/Mac)
-├── 🔧 compilar_c.bat                # Script para compilar função C (Windows)
-├── 🔧 compilar_c.sh                 # Script para compilar função C (Linux/Mac)
-├── 📄 README.md                     # Este arquivo
-├── 📄 COMPILAR_C.md                 # Instruções para compilar função C
-│
-└── 💾 sistema_academico.db          # Banco de dados SQLite (criado automaticamente)
+└── 📄 README.md                     # Este arquivo
 ```
 
 ---
@@ -298,7 +298,7 @@ Sistema-Acad-mico-PIM-II-IA/
 
 ### Diagramas UML
 
-O projeto inclui diagramas UML completos em formato PlantUML na pasta [`diagramas/`](diagramas/):
+O projeto inclui diagramas UML completos em formato PlantUML na pasta [`docs/diagramas/`](docs/diagramas/):
 
 - 📊 **Diagrama de Casos de Uso** - Todos os casos de uso do sistema
 - 🏗️ **Diagrama de Classes** - Estrutura de classes e relacionamentos
@@ -308,11 +308,11 @@ O projeto inclui diagramas UML completos em formato PlantUML na pasta [`diagrama
   - Aluno consulta notas
 - 🌐 **Diagrama de Rede LAN** - Arquitetura de rede do sistema
 
-Para visualizar os diagramas, consulte o [README dos Diagramas](diagramas/README.md).
+Para visualizar os diagramas, consulte o [README dos Diagramas](docs/diagramas/README.md).
 
 ### Manual do Usuário
 
-Para um guia completo de uso do sistema, consulte o **[Manual do Usuário](Documentação/MDs/MANUAL_USUARIO.md)**, que inclui:
+Para um guia completo de uso do sistema, consulte o **[Manual do Usuário](docs/MANUAL_USUARIO.md)**, que inclui:
 
 - ✅ Guia passo a passo para cada tipo de usuário
 - ✅ Instruções detalhadas de todas as funcionalidades
@@ -322,12 +322,12 @@ Para um guia completo de uso do sistema, consulte o **[Manual do Usuário](Docum
 
 ### Outros Documentos
 
-A documentação completa está disponível na pasta [`Documentação/MDs/`](Documentação/MDs/):
+A documentação completa está disponível na pasta [`docs/`](docs/):
 
-- **[README_INTERFACE.md](Documentação/MDs/README_INTERFACE.md)** - Documentação técnica da interface
-- **[GUIA_RAPIDO.md](Documentação/MDs/GUIA_RAPIDO.md)** - Guia rápido de instalação
-- **[EXEMPLOS_USO.md](Documentação/MDs/EXEMPLOS_USO.md)** - Exemplos práticos de uso
-- **[ESTRUTURA_PROJETO.md](Documentação/MDs/ESTRUTURA_PROJETO.md)** - Estrutura detalhada do projeto
+- **[README_INTERFACE.md](docs/README_INTERFACE.md)** - Documentação técnica da interface
+- **[GUIA_RAPIDO.md](docs/GUIA_RAPIDO.md)** - Guia rápido de instalação
+- **[EXEMPLOS_USO.md](docs/EXEMPLOS_USO.md)** - Exemplos práticos de uso
+- **[ESTRUTURA_PROJETO.md](docs/ESTRUTURA_PROJETO.md)** - Estrutura detalhada do projeto
 
 ---
 
@@ -382,8 +382,8 @@ chmod +x run.sh
 O sistema inclui uma função C simples para cálculo de média de notas. Esta função é **opcional** - o sistema funciona perfeitamente sem ela, usando cálculo Python.
 
 **Para compilar a função C:**
-- **Windows:** Execute `compilar_c.bat` ou consulte `COMPILAR_C.md`
-- **Linux/Mac:** Execute `chmod +x compilar_c.sh && ./compilar_c.sh` ou consulte `COMPILAR_C.md`
+- **Windows:** Execute `scripts\compilar_c.bat` ou consulte `docs/COMPILAR_C.md`
+- **Linux/Mac:** Execute `chmod +x scripts/compilar_c.sh && ./scripts/compilar_c.sh` ou consulte `docs/COMPILAR_C.md`
 
 **Nota:** Se a função C não estiver compilada, o sistema automaticamente usará o cálculo Python padrão. Não é necessário compilar para o sistema funcionar.
 
@@ -401,8 +401,8 @@ Projeto acadêmico desenvolvido para fins educacionais.
 
 **ConektaAcademy** - Sistema de Gerenciamento Acadêmico
 
-- 📖 **Documentação Completa:** [Documentação/MDs/](Documentação/MDs/)
-- 📊 **Diagramas UML:** [diagramas/](diagramas/)
+- 📖 **Documentação Completa:** [docs/](docs/)
+- 📊 **Diagramas UML:** [docs/diagramas/](docs/diagramas/)
 - 🎓 **Versão:** 1.0
 - 📅 **Última Atualização:** 2024
 

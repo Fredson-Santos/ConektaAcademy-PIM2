@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Script para executar o Sistema Acadêmico com Streamlit
+cd "$(dirname "$0")/.."
 
 echo ""
 echo "================================"

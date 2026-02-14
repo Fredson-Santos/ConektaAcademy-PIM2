@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Script para compilar a função C no Linux/Mac
+cd "$(dirname "$0")/.."
 
 echo ""
 echo "================================"
